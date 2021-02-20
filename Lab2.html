@@ -20,13 +20,45 @@
 
         <style type="text/css">
 
-          html, body { margin: 0; padding: 0; height: 100%; }
+        #map { min-height: 100%; }
 
-          #map { min-height: 100%; }
+                    .legend {
+
+                      padding: 6px 8px;
+
+                      line-height: 18px;
+
+                      background: rgba(255,255,255,0.9);
+
+                      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+
+                      border-radius: 5px;
+
+                  }
+
+
+
+                   /* Optional: adjust the values below to change the appearance of the legend color boxes */
+
+                   .legend i {
+
+                      width: 18px;
+
+                      height: 18px;
+
+                      float: left;
+
+                      margin-right: 8px;
+
+                      opacity: 0.7;
 
         </style>
 <script src="https://electionmaps.github.io/provinces.js"></script>
 <script src="https://electionmaps.github.io/coviddata.js"></script>
+
+
+
+          }
     </head>
 
 
@@ -45,14 +77,11 @@
 
               center: [34.666, 104.9569],
 
-              zoom: 5,
+              zoom: 5
             });
 
 
 
-
-
-}).addTo(map);
 
 var imagery = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
 
@@ -110,9 +139,35 @@ function style(feature){
 
 return 0.9 * Math.pow(val/minValue, .7) * minRadius;
 
-}var provinces = L.geoJson(provinces,{style:style}).addTo(map);
 
-var covidData = new L.geoJson(coviddata,
+
+
+}
+
+var div = L.DomUtil.create('div', 'legend'),
+
+        grades = [0, 1000000, 2000000, 5000000, 10000000];
+
+                     div.innerHTML = '<b>Population 2019 <br><br></b>';
+
+
+
+                             for (var i = 0; i < grades.length; i++) {
+
+                             div.innerHTML +=
+
+                             '<i style="background:' + getColor(grades[i] + 1) + '"></i>' +
+
+                               grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] +   '<br><br>' : '+');
+
+                                       }
+
+
+
+
+var provinces = L.geoJson(provinces,{style:style}).addTo(map);
+
+var covidData = new L.geoJson(covidData,
 
 
 {pointToLayer: function(feature, ll)
@@ -162,6 +217,51 @@ function getColor(value) {
                return value > 50000000 ? '#54278f':
 
                       value > 25000000  ? '#756bb1':
+
+                      value > 10000000  ? '#9e9ac8':
+
+                      value > 5000000  ? '#cbc9e2':
+
+                                         '#f2f0f7';
+
+           }
+
+           var legend = L.control({position: 'bottomright'});
+
+           // Try the other lower corner if you prefer.
+
+
+
+               legend.onAdd = function (map) {
+
+                 return div;
+
+                 };
+
+
+
+legend.addTo(map);
+
+
+map.on('overlayremove', function(eventLayer){
+
+if (eventLayer.name == 'provinces'){ // We use the key/display name to refer to the layer
+
+map.removeControl(legend); // legend is the variable name of the layer legend
+
+}
+
+});
+
+map.on('overlayadd', function(eventLayer){
+
+                 if (eventLayer.name == 'provinces'){
+
+                 legend.addTo(map);
+
+                 }
+
+                 });
 
                       value > 10000000  ? '#9e9ac8':
 
