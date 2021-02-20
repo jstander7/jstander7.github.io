@@ -46,7 +46,7 @@
 
 
 
-          }
+
     </head>
 
 
@@ -135,37 +135,48 @@ return 0.9 * Math.pow(val/minValue, .7) * minRadius;
 
 
 
+var onEachFeature = function(feature, layer) {
 
+        if (feature.properties) {
 
-var provinces = L.geoJson(provinces,{style:style}).addTo(map);
+          var prop = feature.properties;
+var popup = '<h3>'+prop['Location']+'</h3>'+'<br>Cases Day 1: '+prop['1']+'<br>Cases Day 16: '+prop['covid'];
 
-var covidData = new L.geoJson(covidData,
+feature.layer = layer;
 
-
-{pointToLayer: function(feature, ll)
-
-{return L.circleMarker(ll,
-
-
-  {color: '#000000',
-
-     opacity: 1,
-
-     weight: 2,
-
-     fillColor: '#808080',
-
-     fillOpacity: .5,
-
-     //radius: 10
-
-     radius: calcRadius(feature.properties.covid)
-
- });
+layer.bindPopup(popup, {maxWidth: "auto"});
 
 }
 
-}).addTo(map);
+}; // end onEachFeature
+
+var provinces = L.geoJson(provinces,{style:style}).addTo(map);
+
+var coviddata = new L.geoJson(covidData, {
+
+    onEachFeature : onEachFeature,
+
+    pointToLayer : function(feature, ll){
+
+        return L.circleMarker(ll, {
+
+                color: '#000000',
+
+                opacity: 1,
+
+                weight: 2,
+
+                fillColor: '#808080',
+
+                fillOpacity: .5,
+
+                //radius: 10
+
+                radius: calcRadius(feature.properties.covid)
+
+            });
+
+        }}
 
 var basemaps = {
 
@@ -261,8 +272,10 @@ for (var i = 0; i < grades.length; i++) {
             });
 
 
+
         </script>
 
    </body>
 
 </html>
+
