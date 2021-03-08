@@ -1,5 +1,5 @@
-{var bus =
-"type": "FeatureCollection",
+var bus =
+    {"type": "FeatureCollection",
 "name": "Busstop",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
