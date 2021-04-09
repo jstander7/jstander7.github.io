@@ -86,7 +86,7 @@ lnk_json.selectAll("path")
 .data(lnkbldngsjson.features)
 .enter()
 .append("path")
-.attr("fill", function(d) {ramp(d.properties.RESYRBLT) })
+.attr("fill", function(d) {return ramp(d.properties.RESYRBLT) })
 .attr("stroke","#999")
 .attr("d",geoPath)
 .attr("class","buildingdata")
@@ -100,7 +100,11 @@ d3.select(this).attr("class","buildingdatahover");
 //here,D3toreplacetextinteractivelybasedonbuildingdata
 .on("mouseout",function(d){
   d3.select("h2").text("");
-  d3.select(this).attr("class","buildingdata");});
+  d3.select(this).attr("class","buildingdata"
+
+);
+
+});
 
 </script>
 
