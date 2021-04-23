@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="utf-8" />
@@ -8,6 +10,7 @@ content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <link rel="stylesheet"href="https://js.arcgis.com/4.18/esri/themes/light/main.css" />
 
 <script src="https://js.arcgis.com/4.18/"></script>
+
 <style>
 html,
 body,
@@ -29,40 +32,40 @@ bottom: 20px;
 require([
 "esri/Map",
 "esri/views/MapView",
+"esri/layers/TileLayer",
 "esri/layers/FeatureLayer",
 "esri/widgets/TimeSlider",
 "esri/widgets/Legend"
-], function (Map, MapView, FeatureLayer, TimeSlider, Legend) {
+], function (Map, MapView, TileLayer, FeatureLayer, TimeSlider, Legend) {
 
 
-const popupTemplate = {          // autocasts as new PopupTemplate()
-   title: "this event took place at {depth} feet deep",
-   content: [
-     {
-       type: "fields",
-       fieldInfos: [
-         {
-           fieldName: "mag",
-           label: "Magnitude",
-           format: {
-             places: 0,
-             digitSeparator: true
-           },
-
-             fieldName: "tsunami",
-              label: "tsunami",
-              format:{
-              places: 0,
-              digitSeparator: true
-            },
-            fieldName: "depth",
-            label: "depth",
+  const popupTemplate = {          // autocasts as new PopupTemplate()
+    title: "At the time of this event the magnitude was {mag} at a depth of {depth} feet deep with {tsunami} tsunami",
+    content: [
+      {
+        type: "fields",
+        fieldInfos: [
+          {
+            fieldName: "mag",
+            label: "Magnitude",
             format: {
               places: 0,
               digitSeparator: true
-            },
+            }},
+              {fieldName: "tsunami",
+               label: "tsunami",
+               format:{
+               places: 0,
+               digitSeparator: true
+             }},
+             {fieldName: "depth",
+             label: "depth",
+             format: {
+               places: 0,
+               digitSeparator: true
+             }},
+          ]}]};
 
-         }]}]};
 
 const layer = new FeatureLayer({
 url:
@@ -71,9 +74,13 @@ outFields: [ "mag", "tsunami","depth"], // used to specify what attribute fields
 popupTemplate: popupTemplate
 });
 
-const map = new Map({
-basemap: "hybrid",
-layers: [layer] //if you add more layers, separate by a comma
+var thebasemap = new TileLayer({
+                url:"https://services.arcgisonline.com/arcgis/rest/services/World_Terrain_Base/Mapserver"
+              });
+
+var map = new Map({
+
+layers: [thebasemap, layer] //if you add more layers, separate by a comma
 });
 
 const view = new MapView({
@@ -102,6 +109,7 @@ view: view
 view.ui.add(legend, "top-left");
 //you can position the legend here
 });
+
 </script>
 </head>
 
