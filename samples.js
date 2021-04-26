@@ -1,6 +1,6 @@
 var samples=
 
-"type": "FeatureCollection",
+    {"type": "FeatureCollection",
 "name": "Grid_Samples",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32614" } },
 "features": [
