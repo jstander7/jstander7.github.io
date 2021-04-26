@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <title>Final Project</title>
+
+
+
+
+
+        <style type="text/css">
+
+  html, body { margin: 0; padding: 0; height: 100%; }
+
+  #map { min-height: 100%; }
+
+            .legend {
+
+              padding: 6px 8px;
+
+              line-height: 18px;
+
+              background: rgba(255,255,255,0.9);
+
+              box-shadow: 0 0 15px rgba(0,0,0,0.2);
+
+              border-radius: 5px;
+
+          }
+          /* Optional: adjust the values below to change the appearance of the legend color boxes */
+
+           .legend i {
+
+              width: 18px;
+
+              height: 18px;
+
+              float: left;
+
+              margin-right: 8px;
+
+              opacity: 0.7;
+
+          }
+
+</style>
+
+
+
+    </head>
+
+
+
+    <body>
+
+        <div id="map"></div>
+
+
+
+        <script type="text/javascript">
+
+
+
+          var map = L.map('map', {
+
+              center: [41.24299591956642, -98.03554332481929],
+
+              zoom: 10
+
+          });
+
+
+
+
+
+var imagery = L.tileLayer({
+
+  url: "https://services.arcgisonline.com/arcgis/rest/services/Imagery/Mapserver"
+
+}).addTo(map);
+
+
+
+
+
+var Phosphorus = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
+
+          attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+
+          //subdomains: 'abcd',
+
+          //minZoom: 0,
+
+          //maxZoom: 20,
+
+          //ext: 'png'
+
+}).addTo(map);
+
+
+var pH = L.tileLayer({
+  url: "https://jstander7.github.io/P.html"
+})
+
+
+
+
+
+var basemaps = {
+
+
+    "Satellite Imagery": imagery
+
+};
+
+
+
+var overlaymaps = {
+
+    "China Provinces ": pH
+
+};
+
+L.control.layers(basemaps, overlaymaps, {collapsed:false}).addTo(map);
+
+
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+
+
+      var div = L.DomUtil.create('div', 'legend'),
+
+        grades = [0, 5000000, 10000000, 25000000, 50000000];
+
+
+div.innerHTML = '<b>Population 2019 <br><br></b>';
+
+
+for (var i = 0; i < grades.length; i++) {
+
+        div.innerHTML +=
+
+        '<i style="background:' + getColor(grades[i] + 1) + '"></i>' +
+
+          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] +   '<br><br>' : '+');
+
+                  }
+
+
+
+                  return div;
+
+              };
+
+
+
+            legend.addTo(map);
+
+            map.on('overlayremove', function(eventLayer){
+
+             if (eventLayer.name == 'provinces'){ // We use the key/display name to refer to the layer
+
+               map.removeControl(legend); // legend is the variable name of the layer legend
+
+             }
+
+           });
+
+           map.on('overlayadd', function(eventLayer){
+
+             if (eventLayer.name == 'provinces'){
+
+               legend.addTo(map);
+
+             }
+
+           });
+
+        </script>
+
+   </body>
+
+</html>
