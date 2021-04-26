@@ -1,3 +1,4 @@
+var samples=
 {
 "type": "FeatureCollection",
 "name": "Grid_Samples",
@@ -54,4 +55,4 @@
 { "type": "Feature", "properties": { "Field": "Brandes", "Sample_ID": 30, "Depth": "0-36", "Total_N_0": 0.063911, "Total_C_0": 0.609095, "Total_N_8": 0.029171, "Total_C_8": 0.150594, "NO3_N_ug_g": 1.76746, "NH4_N_ug_g": 1.40272, "LOI_0_8in": 1.33668, "EC_0_8in": 0.07, "pH_0_8in": 6.94, "Phos_Bray1": 19.120503, "NO3_N_ug_1": 1.52031, "NH4_N_ug_1": 1.71909, "LOI_8_36in": 0.581609, "EC_8_36in": 0.06, "pH_8_36in": 6.64, "Phos_Bra_1": 10.881772, "BpH": 8.14 }, "geometry": { "type": "Point", "coordinates": [ 580677.744827931048349, 4566196.384431001730263 ] } },
 { "type": "Feature", "properties": { "Field": "Brandes", "Sample_ID": 32, "Depth": "0-8", "Total_N_0": 0.041556, "Total_C_0": 0.25933, "Total_N_8": 0.0, "Total_C_8": 0.0, "NO3_N_ug_g": 4.63925, "NH4_N_ug_g": 4.22718, "LOI_0_8in": 0.72664, "EC_0_8in": 0.06, "pH_0_8in": 6.36, "Phos_Bray1": 26.947942, "NO3_N_ug_1": 0.0, "NH4_N_ug_1": 0.0, "LOI_8_36in": 0.0, "EC_8_36in": 0.0, "pH_8_36in": 0.0, "Phos_Bra_1": 0.0, "BpH": 7.56 }, "geometry": { "type": "Point", "coordinates": [ 580502.707044297363609, 4566056.538074024952948 ] } }
 ]
-}
+};
