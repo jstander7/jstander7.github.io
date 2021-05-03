@@ -1,27 +1,26 @@
-<!DOCTYPEhtml>
+<!DOCTYPE html>
 <html>
 <head>
-  <metacharset="utf-8"/>
-  <metaname="viewport"content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
-  <title>Visualize features with realistic WebStyleSymbols - 4.14</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport"content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <title>Lab8</title>
 
-  <linkrel="stylesheet"
+  <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/light/main.css"/>
 
-  href="https://js.arcgis.com/4.14/esri/themes/light/main.css"/>
-
-  <script src ="https://js.arcgis.com/4.14/"></script>
+  <script src="https://js.arcgis.com/4.14/"></script>
 
 
 <style>
 html,
 body,
-#viewDiv
-{padding:0;margin:0;height:100%;width:100%;}
+#viewDiv {padding:0;margin:0;height:100%;width:100%;}
+
+
 </style>
 
 <script>
 
-require([
+require ([
   "esri/WebScene",
   "esri/views/SceneView",
   "esri/layers/FeatureLayer",
@@ -43,13 +42,13 @@ require([
       camera:{position:{
         latitude:41.6608232,
         longitude:-91.537668,
-        z:290
+        z:390
       },
-      tilt:60,
-      heading:330},
+      tilt:80,
+      heading:430},
       environment:{
         lighting:{
-          date:new Date("April15,202016:00:00EDT"),
+          date:new Date("April 15, 2020 12:00:00 EDT"),
           directShadowsEnabled:true,
           ambientOcclusionEnabled:true
         }
@@ -61,21 +60,21 @@ require([
         value:"Crataegussp.",
         symbol:{
           type:"web-style",//autocastsasnewWebStyleSymbol()
-          name:"Crataegus",
+          name:"Musa",
           styleName:"EsriRealisticTreesStyle"
         }},
         {
           value:"Fraxinuspennsylvanica",
           symbol:{
             type:"web-style",//autocastsasnewWebStyleSymbol()
-            name:"Fraxinus",
+            name:"Phyllostachys",
             styleName:"EsriRealisticTreesStyle"
           }},
           {
             value:"Piceaabies",
             symbol:{
               type:"web-style",//autocastsasnewWebStyleSymbol()
-              name:"Picea",
+              name:"Acer",
               styleName:"EsriRealisticTreesStyle"
 
             }},
@@ -83,7 +82,7 @@ require([
               value:"Gleditsiatriacanthos",
               symbol:{
                 type:"web-style",//autocastsasnewWebStyleSymbol()
-                name:"Robinia",
+                name:"Sansevieria",
                 styleName:"EsriRealisticTreesStyle"
 
               }},
@@ -91,7 +90,7 @@ require([
                 value:"Fagusgrandifolia",
                 symbol:{
                   type:"web-style",//autocastsasnewWebStyleSymbol()
-                  name:"Fagus",
+                  name:"Bulbophyllum",
                   styleName:"EsriRealisticTreesStyle"
 
                 }},
@@ -99,22 +98,28 @@ require([
                   value:"Quercusmacrocarpa",
                   symbol:{
                     type:"web-style",//autocastsasnewWebStyleSymbol()
-                  name:"Quercus",
+                  name:"Fagus",
                   styleName:"EsriRealisticTreesStyle"
                 }},
                 {
                   value:"Pinusstrobus",
                   symbol:{
                     type:"web-style",//autocastsasnewWebStyleSymbol()
-                  name:"Pinus",
+                  name:"Helianthus",
                   styleName:"EsriRealisticTreesStyle"
                 }},
                 {
                   value:"Liriodendrontulipifera",
-                  symbol:{type:"web-style",//autocastsasnewWebStyleSymbol()
-                  name:"Philodendron",
+                  symbol:{
+                    type:"web-style",//autocastsasnewWebStyleSymbol()
+                  name:"Castanea",
                   styleName:"EsriRealisticTreesStyle"
                 }}];
+
+    var BikePaths = new FeatureLayer ({
+                  url: "https://maps.facilities.uiowa.edu/arcgis/rest/services/Features/Bikes/MapServer"
+    });
+
 
     var vegetationLayer= new FeatureLayer({
       url:
@@ -141,16 +146,26 @@ require([
         type:"rotation",
         valueExpression:"random()*360"//weusearandomrotation,sothatplantslookdifferent
       }]}});
+
+
+
       map.add(
-        vegetationLayer);
+        vegetationLayer, BikePaths);
 
       });
+
+
+
+
+
+
+
 
 
 
     </script>
     </head>
     <body>
-    <divid="viewDiv"></div>
+    <div id="viewDiv"></div>
     </body>
     </html>
